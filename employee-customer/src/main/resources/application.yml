@@ -1,2 +1,9 @@
 server:
   port: 8091
+
+eureka:
+  client:
+    service-url: 
+      default: http://localhost:8090/eureka
+
+spring.application.name: employee-consumer
