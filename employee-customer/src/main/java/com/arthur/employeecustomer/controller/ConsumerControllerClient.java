@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +23,9 @@ public class ConsumerControllerClient {
   @Autowired
   private DiscoveryClient discoveryClient;
 
+  @Autowired
+  private RestTemplate restTemplate;
+
   public void getEmployee() {
     List<ServiceInstance> instances = discoveryClient.getInstances("employee-producer");
     ServiceInstance serviceInstance = instances.get(0);
@@ -28,7 +34,6 @@ public class ConsumerControllerClient {
 
     baseUrl = baseUrl + "/employee";
 
-    RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<String> response = null;
 
     try {
